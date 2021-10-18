@@ -10,7 +10,7 @@ pipeline{
             agent any
             steps{
                 script{
-                    sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                    sh 'docker build -t ${IMAGE_NAME} .'
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline{
             steps{
                 script{
                     sh '''
-                        docker run --name ${CONTAINER_NAME} -d -p 80:5555 -e PORT=5555 ${IMAGE_NAME}:${IMAGE_TAG}
+                        docker run --name ${CONTAINER_NAME} -d -p 8082:5555 -e PORT=5555 ${IMAGE_NAME}:${IMAGE_TAG}
                         sleep 5
                     ''' 
                 }
