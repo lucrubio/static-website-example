@@ -1,3 +1,2 @@
-FROM apache
-LABEL maintainer='Luc Rubio'
-COPY ./static-example/ /var/www/html
+FROM nginx
+COPY . /usr/share/nginx/html
