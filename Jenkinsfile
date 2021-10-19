@@ -3,6 +3,7 @@ pipeline{
         IMAGE_NAME = "static-website-example"
         IMAGE_TAG = "${BUILD_TAG}"
         CONTAINER_NAME = "Webstatic"
+        USERNAME = "Luc Rubio"
     }
     agent none
     stages {
@@ -35,7 +36,31 @@ pipeline{
                 }
             }
         }
+
+        stage('Clean Container') {
+        agent any
+            steps {
+                script {
+                    sh '''
+                       docker stop ${CONTAINER_NAME}
+                       docker rm ${CONTAINER_NAME}
+                    '''
+                }
+            }
+        }
+    
+    stage('Push image to Dockerhub') {
+            agent any
+            steps {
+                script {
+                    sh '''
+                       docker login -u ${USERNAME} -p ${PASSWORD}
+                       docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
+                }
+            }
+        }
     }
 
-
+    
 }
